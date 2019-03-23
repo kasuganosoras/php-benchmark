@@ -309,7 +309,7 @@ echo "测试完成，耗时: {$s2}\n";
 
 $result = (array_sum($list_float) / count($list_float));
 $one_score = (100 - $result) * 100;
-echo "\n + 单核心测试平均值: " . $result . " | 单核心性能跑分: {$one_score}\n\n";
+echo "\n + 单核心测试平均值: " . round($result) . " | 单核心性能跑分: " . round($one_score) . "\n\n";
 
 // 多核心性能测试
 echo "开始进行多核心浮点测试...";
@@ -334,7 +334,7 @@ while($s !== $runCore) {
 $s2 = microtime(true) - $s1;
 $s2 = round($s2, 5);
 $result = (array_sum($result_arr) / count($result_arr));
-$temp_score = ((100 - $s2) + (100 - $result)) * 100;
+$temp_score = ((1000 - $s2) + (1000 - $result)) * 100;
 $multi_score[] = $temp_score;
 echo "测试完成，耗时: {$s2} | {$temp_score}\n";
 
@@ -359,7 +359,7 @@ while($s !== $runCore) {
 $s2 = microtime(true) - $s1;
 $s2 = round($s2, 5);
 $result = (array_sum($result_arr) / count($result_arr));
-$temp_score = ((100 - $s2) + (100 - $result)) * 100;
+$temp_score = ((1000 - $s2) + (1000 - $result)) * 100;
 $multi_score[] = $temp_score;
 echo "测试完成，耗时: {$s2} | {$temp_score}\n";
 
@@ -387,12 +387,12 @@ $s2 = round($s2, 5);
 $global_s2 = round($global_s2, 5);
 
 $result = (array_sum($result_arr) / count($result_arr));
-$temp_score = ((100 - $s2) + (100 - $result)) * 100;
+$temp_score = ((1000 - $s2) + (1000 - $result)) * 100;
 $multi_score[] = $temp_score;
 echo "测试完成，耗时: {$s2} | {$temp_score}\n";
 
 $multi = array_sum($multi_score) / count($multi_score);
-$result_score = round(((100 - $global_s2) + $multi) * 10);
+$result_score = round(((1000 - $global_s2) + $multi) * 10);
 
 echo "\n + 多核心测试平均值: " . round($multi) . " | 总耗时: " . round($global_s2, 2) . "s | 多核心性能跑分: {$result_score}\n\n";
 
@@ -419,6 +419,6 @@ $disk_score = round(($ws + $write_speed) * 100);
 echo "测试完成，耗时：" . round($ws, 2) . "s\n";
 echo "\n + 硬盘写入测试: {$write_speed}MB/s | 硬盘性能跑分: {$disk_score}\n\n";
 echo "==========================================================\n\n";
-echo "服务器综合跑分: " . round($one_score + $result_score + $disk_score) . "\n\n";
+echo "服务器综合跑分: " . round(($one_score + $result_score + $disk_score) / 10) . "\n\n";
 echo "PHP Benchmark 测试完毕，以上分数仅供参考，分数会受 PHP 版本以及系统当前状况影响。\n\n";
 exec("rm -rf /tmp/phpbenchmark/*");
